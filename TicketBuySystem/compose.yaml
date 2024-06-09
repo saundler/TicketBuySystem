@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  authenticator-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: authenticator_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2341
+    volumes:
+      - authenticator-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  authenticator-service:
+    build:
+      dockerfile: UserAuthenticatorMicroservice/docker/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - authenticator-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://authenticator-db:5432/authenticator_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 2341
+
+  purchase-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: purchase_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2341
+    volumes:
+      - purchase-db-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  purchase-service:
+    build:
+      dockerfile: TicketPurchaseOrderMicroservice/docker/Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - purchase-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://purchase-db:5432/purchase_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 2341
+
+volumes:
+  authenticator-db-data:
+  purchase-db-data:

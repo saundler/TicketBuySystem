@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changeset/V1__initial_setup.sql
+#  - include:
+#      file: db/changeset/Rollback__V1__drop_users_and_sessions_tables.sql
