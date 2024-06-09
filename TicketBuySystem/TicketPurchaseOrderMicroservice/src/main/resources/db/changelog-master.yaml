@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changeset/V1__initial_setup.sql
+#  - include:
+#      file: db/changeset/Rollback__V1__drop_stations_and_orders_tables.sql
+  - include:
+      file: db/changeset/V2__insert_stations.sql
+#  - include:
+#      file: db/changeset/Rollback__V2__delete_insert_stations.sql
